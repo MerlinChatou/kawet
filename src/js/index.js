@@ -1,27 +1,38 @@
 import "Assets/css/style.css";
-import kawetSprite from 'Assets/level1/kawet-sprite.png';
+import kawetSprite from "Assets/level1/kawet-sprite.png";
 
 
 
+window.addEventListener("DOMContentLoaded", (event) => {
+  
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
 
-window.onload = window.onresize = function () {
-  var canvas = document.getElementById('canvas');
-  console.log (canvas);
+  // Set the canvas full screen
   canvas.width = document.body.clientWidth; //document.width is obsolete
-    canvas.height = document.body.clientHeight; //document.height is obsolete
-  console.log(canvas.offsetHeight)
+  canvas.height = document.body.clientHeight; //document.height is obsolete
+  
 
 
   var img = new Image();
   img.src = kawetSprite;
-  img.onload = function () {
-    canvas.getContext('2d').drawImage(img, 0, 0, 48, 48, 50, 50, 96, 96);
-    canvas.getContext('2d').drawImage(img, 48, 0, 48, 48, 100, 100, 96, 96);
+
+  let i=0, x=0;
+  function draw() {
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, i*48, 0, 48, 48, x, 50, 128, 128);
+    if (++i>11) i=0;
+    if (i<7) x+=5;
+    
+    //ctx.drawImage(img, 48, 0, 48, 48, 100, 100, 96, 96);
+    setTimeout(() => { 
+      window.requestAnimationFrame(draw);
+    }, 100);
   }
   
 
 
-
-}
-
+  window.requestAnimationFrame(draw);
+});
 
